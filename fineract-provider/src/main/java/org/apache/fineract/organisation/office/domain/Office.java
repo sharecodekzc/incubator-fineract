@@ -200,6 +200,10 @@ public class Office extends AbstractPersistableCustom<Long> {
     public String getName() {
         return this.name;
     }
+    
+    public String getexternalId() {
+        return this.externalId;
+    }
 
     public String getHierarchy() {
         return this.hierarchy;

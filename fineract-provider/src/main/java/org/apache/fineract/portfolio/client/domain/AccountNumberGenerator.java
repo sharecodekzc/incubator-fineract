@@ -44,6 +44,7 @@ public class AccountNumberGenerator {
     private final static String ID = "id";
     private final static String CLIENT_TYPE = "clientType";
     private final static String OFFICE_NAME = "officeName";
+    private final static String OFFICE_ID = "officeId";
     private final static String LOAN_PRODUCT_SHORT_NAME = "loanProductShortName";
     private final static String SAVINGS_PRODUCT_SHORT_NAME = "savingsProductShortName";
     private final static String SHARE_PRODUCT_SHORT_NAME = "sharesProductShortName" ;
@@ -63,6 +64,7 @@ public class AccountNumberGenerator {
         Map<String, String> propertyMap = new HashMap<>();
         propertyMap.put(ID, loan.getId().toString());
         propertyMap.put(OFFICE_NAME, loan.getOffice().getName());
+        propertyMap.put(OFFICE_ID, loan.getOffice().getexternalId());
         propertyMap.put(LOAN_PRODUCT_SHORT_NAME, loan.loanProduct().getShortName());
         return generateAccountNumber(propertyMap, accountNumberFormat);
     }
@@ -71,6 +73,7 @@ public class AccountNumberGenerator {
         Map<String, String> propertyMap = new HashMap<>();
         propertyMap.put(ID, savingsAccount.getId().toString());
         propertyMap.put(OFFICE_NAME, savingsAccount.office().getName());
+        propertyMap.put(OFFICE_ID, savingsAccount.office().getexternalId());
         propertyMap.put(SAVINGS_PRODUCT_SHORT_NAME, savingsAccount.savingsProduct().getShortName());
         return generateAccountNumber(propertyMap, accountNumberFormat);
     }
@@ -97,11 +100,15 @@ public class AccountNumberGenerator {
                 break;
 
                 case LOAN_PRODUCT_SHORT_NAME:
-                    prefix = propertyMap.get(LOAN_PRODUCT_SHORT_NAME);
+                    prefix = propertyMap.get(OFFICE_ID) + propertyMap.get(LOAN_PRODUCT_SHORT_NAME);
                 break;
 
                 case SAVINGS_PRODUCT_SHORT_NAME:
-                    prefix = propertyMap.get(SAVINGS_PRODUCT_SHORT_NAME);
+                    prefix = propertyMap.get(OFFICE_ID) + propertyMap.get(SAVINGS_PRODUCT_SHORT_NAME);
+                break;
+                
+                case OFFICE_ID:
+                    prefix = propertyMap.get(OFFICE_ID);
                 break;
 
                 default:
